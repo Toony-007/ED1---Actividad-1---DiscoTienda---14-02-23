@@ -1,0 +1,10 @@
+Reporte de discos costosos.
+/////////////*/
+Nombre: Confessions on a Dance Floor, Artista: Madonna, Genero : Pop
+/////////////*/
+Nombre: Push the Button, Artista: The Chemical Brothers, Genero : Electrónica
+/////////////*/
+Nombre: Is This It, Artista: The Strokes, Genero : Rock
+/////////////*/
+Nombre: Elephant, Artista: The White Stripes, Genero : Rock
+/////////////*/
