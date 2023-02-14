@@ -35,7 +35,7 @@ public class PanelExtension extends JPanel implements ActionListener
     /**
      * Comando para la opci�n 2
      */
-    private static final String OPCION_2 = "Infome de discos costosos";
+    private static final String OPCION_2 = "Opcion2";
 
     /**
      * Comando para la opci�n 3
@@ -116,12 +116,12 @@ public class PanelExtension extends JPanel implements ActionListener
         botonOpcion1.addActionListener( this );
         add( botonOpcion1 );
 
-        botonOpcion2 = new JButton( "Opci�n 2" );
+        botonOpcion2 = new JButton( "Reporte discos costosos." );
         botonOpcion2.setActionCommand( OPCION_2 );
         botonOpcion2.addActionListener( this );
         add( botonOpcion2 );
 
-        botonOpcion3 = new JButton( "Opci�n 3" );
+        botonOpcion3 = new JButton( "¿Desea eliminar el reporte de discos costosos?" );
         botonOpcion3.setActionCommand( OPCION_3 );
         botonOpcion3.addActionListener( this );
         add( botonOpcion3 );

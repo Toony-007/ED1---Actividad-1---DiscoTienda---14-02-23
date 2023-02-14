@@ -495,17 +495,56 @@ public class Discotienda
         return false;
     }
     
+    // -----------------------------------------------------------------
+    // Trabajo del estudiante.
+    // -----------------------------------------------------------------
+    
     
     /**
      * Generar un informe de discos costosos en la discotienda.
      * @param pGenero - Genero ingresado por el usuario.
      * @throws FileNotFoundException - Cuando no existe una ruta especifica al escribir o leer.
+     * @throws IOException - Cuando existe el genero de un disco y cuando el disco no supera los 1000.
      */
-    public void generarInformeDeDiscosCostosos(String pGenero) throws FileNotFoundException
+    
+    public void generarInformeDeDiscosCostosos(String pGenero) throws FileNotFoundException, IOException
     {
     	// Crear variables temporales para evualar si existen o no los discos.
     	int existeElGenero = 0;
     	int existeElDiscoCostoso = 0;
+    	
+    	// Recorrido total de los discos.
+    	for(int i=0; i<discos.size(); i++)
+    	{
+    		// Extraer la informacion de cada disco.
+    		Disco miDisco = (Disco)discos.get(i);
+    		
+    		// Evaluar si existe o no el genero ingresado por el usuario.
+    		if(miDisco.darGenero().equals(pGenero))
+    			existeElGenero++;
+    		{
+    			if(miDisco.darPrecioDisco()>1000)
+    			{
+    				existeElDiscoCostoso++;
+    			} 
+    		}
+    	}
+    	
+    	// Condiciones validad siempre y cuenta se cumplan las condiciones en el anterior recorrido de los discos.
+    	if(existeElGenero==0)
+    	{
+    		throw new IOException("El genero ingresado no existe.");
+    		//JOptionPane.showMessageDialog(null, "El genero ingresado no existe.");
+    	} else if (existeElDiscoCostoso==0)
+    	{
+    		throw new IOException("No existe discos costosos con el genero: " + pGenero + ".");
+    		//JOptionPane.showMessageDialog(null, "No existe discos costosos con el genero: " + pGenero + ".");
+    	} /*else {
+    		
+    		//JOptionPane.showMessageDialog(null, "Existen discos costosos con el genero: " + pGenero + ".");
+    	}
+    	// JOptionPane.showMessageDialog(null, "El reporte ha sido generado.");
+    	*/
     	
     	// Crear el archivo con la clase File
     	File archivo = new File("./data/discosCostosos.txt");
@@ -526,38 +565,45 @@ public class Discotienda
     		Disco miDisco = (Disco)discos.get(i);
     		
     		// Evaluar si existe o no el genero ingresado por el usuario.
-    		if(miDisco.darGenero().equals(pGenero))
-    			existeElGenero++;
+    		if(miDisco.darGenero().equals(pGenero) && miDisco.darPrecioDisco() > 1000)
     		{
-    			if(miDisco.darPrecioDisco()>1000)
-    			{
-    				// Ecribir con la pluma la informacion de los discos.
-    				pluma.println("Nombre: " + miDisco.darNombreDisco() + 
-    						", " + "Artista: " + miDisco.darArtista() +
-    						", " + "Genero : " + miDisco.darGenero());
+    				// Escribir con la pluma la informacion de los discos.
+    				pluma.println("Nombre: " + miDisco.darNombreDisco() + ", " +
+    						"Artista: " + miDisco.darArtista() + ", " +
+    						"Genero: " + miDisco.darGenero() + ".");
     				pluma.println("/////////////*/");
-    				existeElDiscoCostoso++;
-    			} 
     		}
     	}
-    	
-    	// Condiciones validad siempre y cuenta se cumplan las condiciones en el anterior recorrido de los discos.
-    	if(existeElGenero==0)
-    	{
-    		JOptionPane.showMessageDialog(null, "El genero ingresado no existe.");
-    	} else if (existeElDiscoCostoso==0)
-    	{
-    		JOptionPane.showMessageDialog(null, "No existe discos costosos con el genero: " + pGenero + ".");
-    	} else {
-    		JOptionPane.showMessageDialog(null, "Existen discos costosos con el genero: " + pGenero + ".");
-    	}
-    	
-    	JOptionPane.showMessageDialog(null, "El reporte ha sido generado.");
-    	
     	// Cerrar la pluma
     	pluma.close();
     }
 
+    
+    /**
+     * Generar un informe de discos costosos en la discotienda.
+     * @throws FileNotFoundException - Cuando no existe una ruta especifica al escribir o leer.
+     * @throws IOException - Cuando existe un reporte discosCostosos.txt para eliminar o cuando no existe un reporte discosCostosos.txt para eliminar.
+     * 
+     */
+    public void eliminarReporteDeDiscosCostosos() throws FileNotFoundException, IOException
+    {
+    	
+    	File archivo = new File("./data/discosCostosos.txt");
+    	
+    	if(archivo.exists()) {
+            if(archivo.delete()) {
+            	//throw new IOException("El resporte de discos costosos ha sido eliminado.");
+            	//JOptionPane.showMessageDialog(null, "El reporte de discos costosos ha sido eliminado.");
+            } else {
+            	throw new IOException("El reporte de discos costosos no pudo ser eliminado.");
+            	//JOptionPane.showMessageDialog(null, "El reporte de discos costosos no pudo ser eliminado.");
+            }
+    	} else {
+    		throw new IOException("El resporte de discos costosos no existe.");
+    		//JOptionPane.showMessageDialog(null, "El reporte de discos costosos no existe.");
+    	}
+    	
+    }
     // -----------------------------------------------------------------
     // Puntos de Extensi�n
     // -----------------------------------------------------------------
@@ -573,7 +619,11 @@ public class Discotienda
 
     /**
      * Es el punto de extensi�n 2
-     * @return respuesta 2
+     * @return - Depedniendo de la eleccion del usario, en primera instancia se el genero ingresado
+     * 			 corresponde a uno existente el metodo es llamado y se ejecutara normalmente,
+     * 			 en esgunda instancia si el usuario ingresa un genero no existente el programa lanza
+     *           un error, y en tercera instancia si el usuario da click en cancelar el programa
+     *           lanza un mensaje.
      */
     public String metodo2( )
     {
@@ -585,25 +635,37 @@ public class Discotienda
 			// evaluamos si la casilla de dialogo se selecciono aceptar o cancelar.
 			if(datoUsuario != null)
 			{
+				// Llamanos al metodo creado.
 				generarInformeDeDiscosCostosos(datoUsuario);
 				
-				return "Gracias por usarnos, 7u7.";
+				return "Reporte Generado." + "\n" + "Gracias por usarnos, 7u7.";
 			}else {
-				return "Sin ejecucion.";
+				return "Vuelva pronto.";
 			}
 			
 		} catch (Exception e) {
-			return "Error: (" + e.getMessage() + ")";
+			return "Error:" + "\n" + "(" + e.getMessage() + ")" + "\n" + "Reporte no generado con exito.";
 		}
     }
 
     /**
      * Es el punto de extensi�n 3
-     * @return respuesta 3
+     * @return - Depedniendo de la eleccion del usario, en primera instancia si el usuario elije "aceptar" se ejecutara el metodo 
+     *           eliminarReporteDeDiscosCostosos(), en caso contrario mostara un mensaje.
      */
     public String metodo3( )
     {
-        return "respuesta 3";
+    	try {
+    		int opcion = JOptionPane.showConfirmDialog(null, "¿Desea eliminar el archivo discosCostosos.txt?", "Eliminar archivo", JOptionPane.YES_NO_OPTION);
+    		if (opcion == JOptionPane.YES_OPTION) {
+    			eliminarReporteDeDiscosCostosos();
+    			return "El archivo discosCostosos.txt ha sido eliminado.";
+    		} else {
+    			return "Vuelva pronto.";
+    		}
+    	} catch (Exception e) {
+    		return "Error:" + "\n" + "(" + e.getMessage() + ")";
+    	}
     }
 
     /**
