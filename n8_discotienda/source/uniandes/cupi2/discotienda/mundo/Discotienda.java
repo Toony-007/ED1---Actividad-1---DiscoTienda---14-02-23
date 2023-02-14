@@ -628,11 +628,10 @@ public class Discotienda
     public String metodo2( )
     {
     	try {
-    		
-    		// String mensaje = "";
+    		// Se inicializa una variable para guardar la genero que el usuario ingresa.
 			String datoUsuario = JOptionPane.showInputDialog(null, "ingrese el genero del cual desea realizar el reporte");
 			
-			// evaluamos si la casilla de dialogo se selecciono aceptar o cancelar.
+			// Se evalua si la casilla de dialogo se selecciono aceptar o cancelar.
 			if(datoUsuario != null)
 			{
 				// Llamanos al metodo creado.
