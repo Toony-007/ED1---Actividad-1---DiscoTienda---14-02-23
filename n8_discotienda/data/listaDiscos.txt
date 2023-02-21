@@ -5,4 +5,4 @@ Isagi,Phonk,BlueLock,Isagi.jpg
 Dile,Dom Omar, Reggaeton viejo,dil.jpg
 Alone,Alan Walker,Electronica,alo.jpg
 La bachata,Manuel Turizo,Bachata,laba.jpg
-Tu eres ajena,Eddy Herrera,Salsa, tuere.jpg
+Tu eres ajena,Eddy Herrera,Salsa,tuere.jpg

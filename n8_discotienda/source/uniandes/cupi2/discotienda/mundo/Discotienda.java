@@ -653,9 +653,10 @@ public class Discotienda
         	
         	fr.close();
         	lector.close();
+        	
     	} else {
     		
-    		throw new IOException("El listado de discod no existe.");
+    		throw new IOException("El listado de disco no existe.");
     		//JOptionPane.showMessageDialog(null, "El reporte de discos costosos no existe.");
     	}
     	
@@ -675,7 +676,9 @@ public class Discotienda
     
     public void generarReporteDeDiscosPorCantidadDeCamciones(int pcantidadCancionesUsuario) throws FileNotFoundException, IOException
     {
+    	
     	int existenCanciones = 0;
+    	
     	// Recorrido total de los discos.
     	for(int a=0; a<discos.size(); a++)
     	{
@@ -696,6 +699,7 @@ public class Discotienda
     	{
     		throw new IOException("No existen discos que contengan menos de " + pcantidadCancionesUsuario + " canciones.");
     	}
+    	
     	// Crear el archivo con la clase File
         File archivo = new File("./data/reporteDeDiscos.txt");
         	
@@ -727,6 +731,7 @@ public class Discotienda
                 	//ArrayList cancion = new ArrayList<>();
                 	//cancion = miDisco.darNombresCanciones();
             
+                	
                 	Cancion cancion = miDisco.darCancion(miDisco.darNombresCanciones().get(j).toString());
                     //Cancion cancion = disco.darCancion(nombreCancion);
                     // Escribir con la pluma la información de cada canción.
@@ -844,7 +849,7 @@ public class Discotienda
     {
     	try {
     		// Se inicializa una variable para guardar la genero que el usuario ingresa.
-    		String datoUsuario = JOptionPane.showInputDialog(null, "ingrese el genero del cual desea realizar el reporte");
+    		String datoUsuario = JOptionPane.showInputDialog(null, "ingrese el numero de canciones de los discos del cual desea realizar el reporte");
 
     		// Se evalua si la casilla de dialogo se selecciono aceptar o cancelar.
     		if(datoUsuario != null)
