@@ -496,9 +496,10 @@ public class Discotienda
     }
     
     // -----------------------------------------------------------------
-    // Trabajo del estudiante.
+    // Trabajo del estudiante. N8L1
+    // Antony Salcedo 
     // -----------------------------------------------------------------
-    
+
     
     /**
      * Generar un informe de discos costosos en la discotienda.
@@ -579,6 +580,11 @@ public class Discotienda
     }
 
     
+    // -----------------------------------------------------------------
+    // Trabajo del estudiante. N8L1
+    // Antony Salcedo
+    // -----------------------------------------------------------------
+    
     /**
      * Generar un informe de discos costosos en la discotienda.
      * @throws FileNotFoundException - Cuando no existe una ruta especifica al escribir o leer.
@@ -588,10 +594,11 @@ public class Discotienda
     public void eliminarReporteDeDiscosCostosos() throws FileNotFoundException, IOException
     {
     	
-    	File archivo = new File("./data/discosCostosos.txt");
+    	File archivo1 = new File("./data/discosCostosos.txt");
+    	//File archivo2 = new File("./data/reporteDeDiscos.txt");
     	
-    	if(archivo.exists()) {
-            if(archivo.delete()) {
+    	if(archivo1.exists()) {
+            if(archivo1.delete()) {
             	//throw new IOException("El resporte de discos costosos ha sido eliminado.");
             	//JOptionPane.showMessageDialog(null, "El reporte de discos costosos ha sido eliminado.");
             } else {
@@ -604,19 +611,170 @@ public class Discotienda
     	}
     	
     }
+    
     // -----------------------------------------------------------------
-    // Puntos de Extensi�n
+    // Trabajo del estudiante. N8L2
+    // Antony Salcedo - Felipe Suarez
     // -----------------------------------------------------------------
+    
+    /**
+     * Cargar listado de discos a la disco tienda.
+     * @throws FileNotFoundException - Cuando no existe una ruta especifica al escribir o leer.
+     * @throws IOException - 
+     * @throws ElementoExisteException - Esta excepcion de lanza siempre y cuando exista un disco con el mismo nombre.
+     */
+    public void cargarListadoDeDiscos() throws FileNotFoundException, IOException, ElementoExisteException
+    {
+    	
+    	File archivo = new File("./data/listaDiscos.txt");
+    	
+    	if(archivo.exists())
+    	{
+    		FileReader fr = new FileReader(archivo);
+        	
+        	BufferedReader lector = new BufferedReader(fr);
+        	
+        	String linea = lector.readLine();
+        	
+        	while(linea != null)
+        	{
+        		
+        		String [] datos = linea.split(",");
+        		
+        		String nombre = datos [0];
+        		String artista = datos [1];
+        		String genero = datos [2];
+        		String imagen = datos [3];
+        		
+        		agregarDisco(nombre, artista, genero, imagen);
+        		
+        		linea = lector.readLine();
+        	}
+        	
+        	fr.close();
+        	lector.close();
+    	} else {
+    		
+    		throw new IOException("El listado de discod no existe.");
+    		//JOptionPane.showMessageDialog(null, "El reporte de discos costosos no existe.");
+    	}
+    	
 
+    }
+    
+    // -----------------------------------------------------------------
+    // Trabajo del estudiante. N8L2
+    // Antony Salcedo - Felipe Suarez
+    // -----------------------------------------------------------------
+    
+    /**
+     * @param pcantidadCancionesUsuario
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    
+    public void generarReporteDeDiscosPorCantidadDeCamciones(int pcantidadCancionesUsuario) throws FileNotFoundException, IOException
+    {
+    	int existenCanciones = 0;
+    	// Recorrido total de los discos.
+    	for(int a=0; a<discos.size(); a++)
+    	{
+    		// Extraer la informacion de cada disco.
+    		Disco miDisco = (Disco)discos.get(a);
+    		
+    		if(miDisco.darNombresCanciones().size() < pcantidadCancionesUsuario)
+    		{
+    			existenCanciones++;
+    		}
+    	}
+    	
+    	if(existenCanciones == 0)
+    	{
+    		throw new IOException("No existen discos que contengan menos de " + pcantidadCancionesUsuario + " canciones.");
+    	}
+    	if(existenCanciones < 0)
+    	{
+    		throw new IOException("No existen discos que contengan menos de " + pcantidadCancionesUsuario + " canciones.");
+    	}
+    	// Crear el archivo con la clase File
+        File archivo = new File("./data/reporteDeDiscos.txt");
+        	
+        // Crear la pluma para escribir en el archivo.
+        PrintWriter pluma = new PrintWriter(archivo);
+        	
+        // Escribir con la pluma en el archivo.
+        pluma.println("REPORTE DE DISCOS CON MENOS DE " + pcantidadCancionesUsuario + " CANCIONES");
+        pluma.println("-----------------------------------------------------------------------");
+        	
+        // Recorrido total de los discos.
+        for(int i=0; i<discos.size(); i++)
+        {
+            // Extraer la información de cada disco.
+            Disco miDisco = (Disco)discos.get(i);
+        		
+            // Evaluar si el disco tiene menos de cierto número de canciones.
+            if(miDisco.darNombresCanciones().size() < pcantidadCancionesUsuario)
+            {
+                // Escribir con la pluma la información de los discos.
+            	pluma.println("");
+                pluma.println("DISCO: " + miDisco.darNombreDisco() + "     ARTISTA: " + miDisco.darArtista());
+                pluma.println("CANCIONES:");
+                pluma.println("-----------------");
+
+                // Recorrido de las canciones del disco.
+                for(int j = 0; j<miDisco.darNombresCanciones().size(); j++)
+                {
+                	//ArrayList cancion = new ArrayList<>();
+                	//cancion = miDisco.darNombresCanciones();
+            
+                	Cancion cancion = miDisco.darCancion(miDisco.darNombresCanciones().get(j).toString());
+                    //Cancion cancion = disco.darCancion(nombreCancion);
+                    // Escribir con la pluma la información de cada canción.
+                	pluma.println("Nombre                            Precio                              Unidades Vendidas");
+                    pluma.println("--------------------------------------------------------------------------------------------");
+                    pluma.println(cancion.darNombre()+ "                            " + cancion.darPrecio()+ "                            " + cancion.darUnidadesVendidas());
+                    pluma.println("--------------------------------------------------------------------------------------------");
+                }
+
+                //pluma.println("--------------------------------------------------------------------------------------------");
+                pluma.println("");
+            }
+        }
+
+        // Cerrar la pluma.
+        pluma.close();
+    }
+    
+    
+    // -----------------------------------------------------------------
+    // Trabajo del estudiante. N8L2
+    // Antony Salcedo - Felipe Suarez
+    // -----------------------------------------------------------------
+    
     /**
      * Es el punto de extensi�n 1
      * @return respuesta 1
      */
     public String metodo1( )
     {
-        return "respuesta 1";
+    	try {
+    		int opcion = JOptionPane.showConfirmDialog(null, "¿Desea agregar el archivo listaDiscos.txt?", "Cargar archivo", JOptionPane.YES_NO_OPTION);
+    		if (opcion == JOptionPane.YES_OPTION) {
+    			cargarListadoDeDiscos();
+    			return "El archivo listaDiscos.txt ha sido cargado.";
+    		} else {
+    			return "Vuelva pronto.";
+    		}
+    	} catch (Exception e) {
+    		return "Error:" + "\n" + "(" + e.getMessage() + ")";
+    	}
     }
-
+    
+    // -----------------------------------------------------------------
+    // Trabajo del estudiante. N8L1
+    // Antony Salcedo
+    // -----------------------------------------------------------------
+    
     /**
      * Es el punto de extensi�n 2
      * @return - Depedniendo de la eleccion del usario, en primera instancia se el genero ingresado
@@ -647,6 +805,11 @@ public class Discotienda
 		}
     }
 
+    // -----------------------------------------------------------------
+    // Trabajo del estudiante. N8L1
+    // Antony Salcedo
+    // -----------------------------------------------------------------
+    
     /**
      * Es el punto de extensi�n 3
      * @return - Depedniendo de la eleccion del usario, en primera instancia si el usuario elije "aceptar" se ejecutara el metodo 
@@ -667,13 +830,36 @@ public class Discotienda
     	}
     }
 
+    
+    // -----------------------------------------------------------------
+    // Trabajo del estudiante. N8L2
+    // Antony Salcedo - Felipe Suarez
+    // -----------------------------------------------------------------
+    
     /**
      * Es el punto de extensi�n 4
      * @return respuesta 4
      */
     public String metodo4( )
     {
-        return "respuesta 4";
+    	try {
+    		// Se inicializa una variable para guardar la genero que el usuario ingresa.
+    		String datoUsuario = JOptionPane.showInputDialog(null, "ingrese el genero del cual desea realizar el reporte");
+
+    		// Se evalua si la casilla de dialogo se selecciono aceptar o cancelar.
+    		if(datoUsuario != null)
+    		{
+        		int datoUsuarios = Integer.parseInt(datoUsuario);
+    			// Llamanos al metodo creado.
+    			generarReporteDeDiscosPorCantidadDeCamciones(datoUsuarios);
+
+    			return "Reporte Generado." + "\n" + "Gracias por usarnos, 7u7.";
+    		}else {
+    			return "Vuelva pronto.";
+    		}
+		} catch (Exception e) {
+			return "Error:" + "\n" + "(" + e.getMessage() + ")";
+		}
     }
 
     /**

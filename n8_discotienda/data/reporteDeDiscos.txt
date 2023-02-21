@@ -1,0 +1,26 @@
+REPORTE DE DISCOS CON MENOS DE 2 CANCIONES
+-----------------------------------------------------------------------
+
+DISCO: Yaoomi     ARTISTA: Torny
+CANCIONES:
+-----------------
+Nombre                            Precio                              Unidades Vendidas
+--------------------------------------------------------------------------------------------
+Sayka                            120.0                            0
+--------------------------------------------------------------------------------------------
+
+
+DISCO: Saya     ARTISTA: Aurora
+CANCIONES:
+-----------------
+
+
+DISCO: Tokyo     ARTISTA: Ghoul
+CANCIONES:
+-----------------
+
+
+DISCO: Isagi     ARTISTA: Phonk
+CANCIONES:
+-----------------
+

@@ -111,7 +111,7 @@ public class PanelExtension extends JPanel implements ActionListener
     {
         principal = ventanaPrincipal;
 
-        botonOpcion1 = new JButton( "Opci�n 1" );
+        botonOpcion1 = new JButton( "Cargar Listado de discos." );
         botonOpcion1.setActionCommand( OPCION_1 );
         botonOpcion1.addActionListener( this );
         add( botonOpcion1 );
@@ -126,7 +126,7 @@ public class PanelExtension extends JPanel implements ActionListener
         botonOpcion3.addActionListener( this );
         add( botonOpcion3 );
 
-        botonOpcion4 = new JButton( "Opci�n 4" );
+        botonOpcion4 = new JButton( "Genere el reporte de discos por cantidad de canciones." );
         botonOpcion4.setActionCommand( OPCION_4 );
         botonOpcion4.addActionListener( this );
         add( botonOpcion4 );
